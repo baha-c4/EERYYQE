@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин товаров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            transition: background-image 0.5s ease;
+            background-size: cover;
+            background-repeat: no-repeat;
+            
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .item {
+            margin-bottom: 10px;
+        }
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Создай свою команду</h1>
+
+        <div class="item">
+            <label>Товар:</label>
+            <select id="product" onchange="updateBackground(); calculateTotal()">
+                <option value="0" data-bg="">Выберите команду</option>
+                <option value="500" data-bg="url('https://cdn-pvp.vkplay.ru/s3/upload/ruescommand/df85fb7fada540931e0071cd9540774d_1604327322.jpg')">Апшу Бандиты - 800тг.</option>
+                <option value="1000" data-bg="url('https://img07.rl0.ru/afisha/e1200x800i/daily.afisha.ru/uploads/images/2/fa/2fac98f60db700efbf3487c04f161a19.jpeg')">Ниггерс - 0тг.</option>
+                <option value="2000" data-bg="url('https://cdnn21.img.ria.ru/images/07e6/06/1b/1798473912_0:451:2085:2015_1920x0_80_0_0_14463771c50eef679299394da560092e.jpg')">Цыгане - 10 000тг.</option>
+            </select>
+        </div>
+
+        <div class="item">
+            <label>Количество:</label>
+            <input type="number" id="quantity" value="1" min="1" onchange="calculateTotal()">
+        </div>
+
+        <div class="total">
+            Итоговая стоимость: <span id="total">0</span>тг.
+        </div>
+    </div>
+
+    <script>
+        function updateBackground() {
+            const productSelect = document.getElementById("product");
+            const selectedOption = productSelect.options[productSelect.selectedIndex];
+            const backgroundImage = selectedOption.getAttribute("data-bg");
+
+            document.body.style.backgroundImage = backgroundImage || "";
+        }
+
+        function calculateTotal() {
+            const productPrice = parseFloat(document.getElementById("product").value);
+            const quantity = parseInt(document.getElementById("quantity").value);
+            
+            if (isNaN(productPrice) || isNaN(quantity)) {
+                document.getElementById("total").innerText = "0";
+                return;
+            }
+            
+            const total = productPrice * quantity;
+            document.getElementById("total").innerText = total;
+        }
+    </script>
+
+</body>
+</html>
